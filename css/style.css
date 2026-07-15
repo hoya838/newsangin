@@ -2291,7 +2291,7 @@ main { padding-top: 66px; }
 .mypage-info-row__icon { flex: none; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: var(--txt-faint); }
 .mypage-info-row__label { flex: none; width: 96px; font-size: 13px; color: var(--txt-lighter); }
 @media (max-width: 767px) {
-  .mypage-info-row__label { width: 72px; }
+  .mypage-info-row__label { width: 62px; }
 }
 .mypage-info-row__value {
   flex: 1;
