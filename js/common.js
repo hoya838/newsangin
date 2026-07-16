@@ -30,6 +30,34 @@
     });
   }
 
+  // ---------- 로그인 헤더 프로필 드롭다운: 클릭 토글, 바깥클릭·Esc 닫기 ----------
+  function initHeaderProfile() {
+    var wrap = document.querySelector("[data-header-profile]");
+    if (!wrap) return;
+    var btn = wrap.querySelector("[data-header-profile-btn]");
+    if (!btn) return;
+
+    function open() {
+      wrap.classList.add("is-open");
+      btn.setAttribute("aria-expanded", "true");
+    }
+    function close() {
+      wrap.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (wrap.classList.contains("is-open")) close(); else open();
+    });
+    document.addEventListener("click", function (e) {
+      if (!wrap.contains(e.target)) close();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") close();
+    });
+  }
+
   // ---------- mesh-gradient-shader: React useEffect/useRef 껍데기를 벗기고 WebGL 로직만 그대로 포팅 ----------
   // 셰이더 문자열(GLSL)과 컴파일/렌더 루프는 원본과 동일. React state 대신 옵션 객체를 클로저에 담음.
   // canvas를 인자로 받아 페이지 내 여러 개(.mesh-gradient-canvas)에 각각 독립적으로 적용 가능.
@@ -194,6 +222,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     if (window.lucide) window.lucide.createIcons();
     initDrawer();
+    initHeaderProfile();
     document.querySelectorAll(".mesh-gradient-canvas").forEach(initStellarMesh);
     initModalA11y();
   });

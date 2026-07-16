@@ -50,8 +50,12 @@ CSS·JS 모두 아래 4단 레이어로만 나눈다. 상위 레이어는 하위
 |---|---|---|---|
 | `index.html` | tokens, common, index | index | logo.svg 외 |
 | `mypage.html` | tokens, common, mypage-common, mypage | common, mypage-common, mypage | logo.svg + 카드사 8종 |
+| `mypage-login.html` | tokens, common, mypage-common, mypage | common, mypage-common, mypage | logo.svg + 카드사 8종 |
 | `edit.html` | tokens, common, mypage-common, edit | common, mypage-common, edit | logo.svg |
 | `login/`, `signup/` | tokens, **style**, auth | auth | logo.svg, 영상 |
+
+- **로그인 상태 헤더**(우측 영상생성/크레딧/프로필 드롭다운)는 common 레이어에 있다: `common.css`의 `.btn-header-video`/`.header-credit`/`.header-profile*`, 동작은 `common.js`의 `initHeaderProfile()`. 로그인한 모든 페이지가 재사용.
+- ⚠️ `css/mypage.css`·`js/mypage.js`는 이제 `mypage.html`+`mypage-login.html` 2개가 공유 → 엄밀히는 mypage-common(③)으로 승격 대상. 현재는 page 레이어에 두고 공유(별도 리팩터 작업으로 이관 검토).
 
 ### 정리 이력 / 남은 항목
 - ✅ `js/main.js` (1542줄) — 참조 HTML 없음 → **삭제 완료**.
