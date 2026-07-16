@@ -470,8 +470,8 @@ main { padding-top: 68px; }
 .drawer__actions .btn-header-video { justify-content: center; height: 44px; }
 /* 드로어 반반 버튼 행: 영상생성 | 마이페이지 (크레딧과 간격 축소) */
 .drawer__btn-row { display: flex; gap: var(--space-8); margin-top: calc(-1 * var(--space-16)); }
-.drawer__btn-row > * { flex: 1 1 0; min-width: 0; justify-content: center; height: 44px; }
+.drawer__btn-row > * { flex: 1 1 0; min-width: 0; justify-content: center; height: 44px; padding-left: 18px; padding-right: 18px; }
 /* 드로어 크레딧: 기능 메뉴 위, 화면 전체 폭(내용은 좌측정렬), 폰트/아이콘 확대 */
-.drawer__credit { align-self: stretch; width: 100%; justify-content: flex-start; height: 52px; font-size: 18px; font-weight: 700; }
+.drawer__credit { align-self: stretch; width: 100%; justify-content: flex-start; height: 52px; padding-left: 18px; padding-right: 18px; font-size: 18px; font-weight: 700; }
 .drawer__credit svg { width: 22px; height: 22px; }
 .drawer__credit .header-credit__unit { font-weight: 700; }
