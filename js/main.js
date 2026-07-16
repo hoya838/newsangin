@@ -367,18 +367,23 @@
     function addPaymentRow() {
       var maskedNum = "**** **** **** " + num4.value;
       var label = issuerValue + " " + maskedNum;
+      var isFirstCard = paymentList.children.length === 0;
       var row = document.createElement("div");
       row.className = "mypage-info-row mypage-payment-item";
       row.setAttribute("data-mypage-card-label", label);
+      var defaultSlotHtml = isFirstCard
+        ? '<span class="mypage-payment-default-label">기본</span>'
+        : '<button class="mypage-btn-ghost" type="button" data-mypage-card-set-default>기본 설정</button>';
       row.innerHTML =
         '<span class="mypage-info-row__icon"><img src="image/' + issuerLogo + '" alt="' + issuerValue + '" width="16" height="16"></span>' +
         '<span class="mypage-info-row__label">' + issuerValue + '</span>' +
         '<span class="mypage-info-row__value">' + maskedNum + '</span>' +
         '<span class="mypage-payment-actions">' +
-        '<button class="mypage-btn-ghost" type="button" data-mypage-card-set-default>기본 설정</button>' +
+        defaultSlotHtml +
         '<button class="mypage-btn-ghost" type="button">삭제</button>' +
         '</span>';
       paymentList.appendChild(row);
+      updateMypagePaymentEmptyState();
     }
 
     openBtn.addEventListener("click", open);
@@ -407,6 +412,13 @@
   }
 
   // ---------- 마이페이지: 결제 수단 삭제 확인 팝업(마지막 카드 경고 + 삭제하기/취소하기) ----------
+  function updateMypagePaymentEmptyState() {
+    var paymentList = document.querySelector("[data-mypage-payment-list]");
+    var emptyState = document.querySelector("[data-mypage-payment-empty]");
+    if (!paymentList || !emptyState) return;
+    emptyState.classList.toggle("is-visible", paymentList.children.length === 0);
+  }
+
   function initMypagePaymentDelete() {
     var paymentList = document.querySelector("[data-mypage-payment-list]");
     var overlay = document.querySelector("[data-mypage-delete-overlay]");
@@ -445,6 +457,7 @@
     confirmBtn.addEventListener("click", function () {
       if (pendingRow) pendingRow.remove();
       close();
+      updateMypagePaymentEmptyState();
     });
   }
 
@@ -1244,6 +1257,7 @@
     initMypageAvatarCrop();
     initMypageCardAdd();
     initMypagePaymentDelete();
+    updateMypagePaymentEmptyState();
     initMypagePaymentDefault();
     initMypagePasswordToggle();
     initMypageWordWrap();
