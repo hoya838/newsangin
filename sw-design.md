@@ -205,6 +205,34 @@ a:focus-visible, button:focus-visible {
 
 폼 인풋은 예외적으로 `outline: 2px solid var(--border-active); outline-offset: 1px`(마이페이지 폼)로 살짝 다르다. 신규 인터랙티브 요소는 이 전역 규칙을 상속받게 두고, `outline:none`으로 지우지 않는다.
 
+## 메시 그라디언트 (시그니처 배경)
+
+랜딩 히어로(`.stellar-hero`)와 마이페이지 커버(`.mypage-cover`)에 쓰는 시그니처 WebGL 셰이더. `common.js`의 `initStellarMesh(canvas)`가 `.mesh-gradient-canvas` 클래스를 가진 모든 캔버스에 독립 적용된다(페이지에 여러 개 가능). 4개의 이동하는 메타볼(metaball)이 가중합으로 섞여 **흰색 베이스 + 코랄 워시**가 천천히 흐르는 화면을 만든다.
+
+```yaml
+# initStellarMesh 옵션 (common.js)
+speed:     10
+intensity: 2
+grain:     0.75
+fallback:  "#5869f7"   # WebGL 미지원 시 단색 폴백
+```
+
+**구현 요약:**
+- full-screen 삼각형 1장(`[-1,-1, 3,-1, -1,3]`) + fragment 셰이더(GLSL)로 픽셀당 색 계산.
+- 4개 메타볼 위치(`p0~p3`)가 `u_time` 기반 sin/cos로 이동, 각 거리의 역수 거듭제곱(e=1.9)을 가중치로 색을 보간.
+- 색 상수: 베이스 흰색 `vec3(1,1,1)` + 액센트 코랄 `vec3(1.0,0.396,0.376)`(≈ #FF6560). 하단으로 갈수록 살짝 어둡게(`smoothstep`), 미세 grain 추가.
+- 리사이즈: `canvas.clientWidth/Height` 기준 `devicePixelRatio`(최대 2)로 백버퍼 크기 조정. `requestAnimationFrame` 루프.
+
+**사용 규칙:**
+- 캔버스에 `class="mesh-gradient-canvas"`만 부여하면 자동 구동. 별도 초기화 코드 불필요.
+- 위에 얹는 텍스트(커버 타이핑 등)는 `#000` 굵은 글씨로 대비 확보 — 메시가 밝아서 어두운 텍스트가 읽힌다.
+- **주의(→Known Gaps):** 현재 셰이더 루프에 `prefers-reduced-motion` 가드가 **없다**(항상 애니메이션). 커버 타이핑 캐럿(`mypageCaretBlink`)만 가드됨. 접근성상 mesh도 reduced-motion 시 정지(마지막 프레임 고정) 처리 검토 대상.
+
+```html
+<canvas class="mesh-gradient-canvas"></canvas>
+<!-- common.js 로드 시 자동 init. CSS로 width/height만 주면 됨 -->
+```
+
 ## Components
 
 상인월드는 **순수 HTML + CSS + JS**로 구현된다(React·Tailwind·framer-motion 없음). 클래스는 BEM 계열(`block__element--modifier`). 아이콘은 Lucide. 아래는 실제 화면에 존재하는 컴포넌트다 — 코드 예시는 HTML/CSS 스니펫으로 준다.
@@ -400,6 +428,7 @@ grey-100 트랙 위 세그먼트, active = 흰 배경 + `--ev-2`, `--radius-8` p
 - **타입 토큰 스케일 부재.** 애드혹 px 직접 사용. 타입 토큰 승격 미완.
 - **누락 영상 자산.** JS가 참조하는 `*.webm`, `hero-vd*.mp4`, `hero-foot01.mp4`가 `image/` 디렉터리에 없음(git status상 삭제됨) — 개발자 전달 시 확인 필요.
 - **다크 모드 미지원.** 라이트 전용. 검정 표면은 국소 디자인 선택.
+- **메시 그라디언트 reduced-motion 미가드.** `initStellarMesh`의 rAF 루프가 `prefers-reduced-motion`을 무시하고 항상 애니메이션 — 히어로·커버 모두 해당. 정지 프레임 처리 검토.
 - **hover 피드백 무효화.** `--opacity-hover:1`이라 헤더 nav·`.btn-header-outline`·`.hamburger`의 opacity hover가 전부 무효 — 데스크톱 헤더 상호작용에 시각 피드백이 사실상 없음. hover 정책 확정(0.7로 낮추거나 규칙 제거) 필요. 헤더 outline버튼·햄버거는 press-scale도 없어 "모든 인터랙티브 press feedback" 규칙과도 어긋남.
 - **헤더 로고 폭 고정.** `.site-header__logo` width 288px가 모바일에서도 고정 → 좁은 폭 오버플로 리스크(overflow-x:hidden 클립). max-width 반응형 검토.
 - **z-index·타입·포커스 토큰 미승격.** z-index(30/40/50/100)·타입 스케일·포커스 링이 하드코딩. 토큰화 검토.

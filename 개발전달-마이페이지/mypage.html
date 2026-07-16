@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>마이페이지(로그인) | 상인월드</title>
+<title>마이페이지 | 상인월드</title>
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/mypage-common.css">
@@ -19,31 +19,13 @@
       <a href="index.html#gallery">갤러리</a>
       <a href="index.html#notice">공지사항</a>
     </nav>
-    <div class="site-header__actions site-header__actions--user">
-      <a class="btn-header-video" href="#"><i data-lucide="video" width="16" height="16"></i>영상생성</a>
-      <a class="header-credit" href="#" aria-label="잔여 크레딧 10,908"><i data-lucide="coins" width="16" height="16"></i>10,908<span class="header-credit__unit">크레딧</span></a>
-      <div class="header-profile" data-header-profile>
-        <button class="header-profile__btn" type="button" data-header-profile-btn aria-haspopup="true" aria-expanded="false" aria-label="프로필 메뉴">준</button>
-        <div class="header-profile__menu" role="menu">
-          <div class="header-profile__info">
-            <span class="header-profile__avatar">준</span>
-            <div class="header-profile__meta">
-              <p class="header-profile__name">준호<span class="header-profile__tag">미구독</span></p>
-              <p class="header-profile__email">tktest03@gmail.com</p>
-            </div>
-          </div>
-          <a href="mypage-login.html" role="menuitem"><i data-lucide="user" width="16" height="16"></i>마이페이지</a>
-          <a href="#" role="menuitem"><i data-lucide="coins" width="16" height="16"></i>크레딧 충전</a>
-          <button type="button" role="menuitem"><i data-lucide="log-out" width="16" height="16"></i>로그아웃</button>
-        </div>
-      </div>
+    <div class="site-header__actions">
+      <a class="btn-header-outline" href="login/">로그인</a>
+      <a class="btn-header-primary" href="signup/">무료로 시작하기</a>
     </div>
-    <div class="site-header__mobile">
-      <a class="btn-header-video" href="#"><i data-lucide="video" width="16" height="16"></i>영상생성</a>
-      <button class="hamburger" type="button" data-drawer-open aria-label="메뉴 열기" aria-expanded="false">
-        <i data-lucide="menu" width="20" height="20"></i>
-      </button>
-    </div>
+    <button class="hamburger" type="button" data-drawer-open aria-label="메뉴 열기" aria-expanded="false">
+      <i data-lucide="menu" width="20" height="20"></i>
+    </button>
   </div>
 </header>
 
@@ -54,14 +36,6 @@
       <i data-lucide="x" width="32" height="32"></i>
     </button>
   </div>
-  <div class="drawer__profile">
-    <span class="drawer__profile-avatar">준</span>
-    <div>
-      <p class="drawer__profile-name">준호</p>
-      <p class="drawer__profile-email">tktest03@gmail.com</p>
-    </div>
-  </div>
-  <a class="header-credit drawer__credit" href="#"><i data-lucide="coins" width="16" height="16"></i>10,908<span class="header-credit__unit">크레딧</span></a>
   <nav class="drawer__nav">
     <a href="index.html#features">기능</a>
     <a href="index.html#pricing">요금안내</a>
@@ -69,9 +43,8 @@
     <a href="index.html#notice">공지사항</a>
   </nav>
   <div class="drawer__actions">
-    <a class="btn-header-video" href="#"><i data-lucide="video" width="16" height="16"></i>영상생성</a>
-    <a class="btn-header-outline" href="mypage-login.html">마이페이지</a>
-    <button class="btn-header-outline" type="button">로그아웃</button>
+    <a class="btn-header-outline" href="login/">로그인</a>
+    <a class="btn-header-primary" href="signup/">무료로 시작하기</a>
   </div>
 </aside>
 

@@ -248,6 +248,7 @@ h3.block:first-of-type { margin-top: var(--space-20); }
       <a href="#motion">모션 · 인터랙션</a>
       <a href="#layering">레이어(z-index)</a>
       <a href="#focus">포커스</a>
+      <a href="#mesh">메시 그라디언트</a>
       <div class="grp">컴포넌트</div>
       <a href="#buttons">버튼</a>
       <a href="#badges">배지 · 태그</a>
@@ -450,6 +451,24 @@ h3.block:first-of-type { margin-top: var(--space-20); }
       </div>
     </section>
 
+    <!-- ============ MESH GRADIENT ============ -->
+    <section id="mesh">
+      <h2>메시 그라디언트</h2>
+      <p class="sub">랜딩 히어로 배경 · 마이페이지 커버에 쓰는 시그니처 WebGL 셰이더. 4개 이동 메타볼이 부드럽게 섞이는 흰/코랄 워시. 아래는 <code>js/common.js</code>의 실제 <code>initStellarMesh()</code>가 렌더한 라이브 화면이다.</p>
+      <div style="border-radius:var(--radius-12);overflow:hidden;border:1px solid var(--border-neutral);position:relative">
+        <canvas class="mesh-gradient-canvas" style="display:block;width:100%;height:240px"></canvas>
+        <p style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;font-size:28px;font-weight:700;color:#000">사진 한 장이면 충분해요<span style="display:inline-block;width:2px;height:1em;margin-left:2px;background:#000;vertical-align:-0.15em"></span></p>
+      </div>
+      <div class="swatch-grid" style="margin-top:var(--space-16)">
+        <div class="sw"><div class="sw__meta"><div class="sw__name">speed</div><div class="sw__val">10</div></div></div>
+        <div class="sw"><div class="sw__meta"><div class="sw__name">intensity</div><div class="sw__val">2</div></div></div>
+        <div class="sw"><div class="sw__meta"><div class="sw__name">grain</div><div class="sw__val">0.75</div></div></div>
+        <div class="sw sw--border"><div class="sw__chip" style="background:#5869f7;height:40px"></div><div class="sw__meta"><div class="sw__name">WebGL 폴백</div><div class="sw__val">#5869f7</div></div></div>
+      </div>
+      <div class="note"><b>구현:</b> full-screen 삼각형 1장 + fragment 셰이더(GLSL). 4개 메타볼 가중합 → 코랄 액센트 <code>vec3(1.0,0.396,0.376)</code> ≈ #FF6560 + 흰색 베이스, 하단 살짝 어둡게 + grain. <code>canvas.clientWidth/Height</code> 기준 DPR≤2로 리사이즈. <b>주의:</b> 현재 <code>prefers-reduced-motion</code> 가드가 없어 항상 애니메이션됨 → 커버/히어로 모두 해당(개선 검토 대상). WebGL 미지원 시 <code>#5869f7</code> 단색 폴백.</div>
+      <p class="spec-label">커버 위 타이핑 텍스트는 <code>#000</code> 굵은 28px + 깜빡이는 캐럿(<code>mypageCaretBlink</code> 800ms, reduced-motion 가드 있음).</p>
+    </section>
+
     <!-- ============ BUTTONS ============ -->
     <section id="buttons">
       <h2>버튼</h2>
@@ -648,6 +667,8 @@ h3.block:first-of-type { margin-top: var(--space-20); }
 </div>
 
 <script src="https://unpkg.com/lucide@latest"></script>
+<!-- 실제 메시 그라디언트 셰이더: DOMContentLoaded에서 .mesh-gradient-canvas 자동 init -->
+<script src="js/common.js"></script>
 <script>
   if (window.lucide) window.lucide.createIcons();
 
